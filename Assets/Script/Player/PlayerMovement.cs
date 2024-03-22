@@ -9,9 +9,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 MousePos;
 
     [Range(1, 9)]
-    [Tooltip("Health value between 0 and 100.")]
+    [Tooltip("Maximum distance from the player, from where the speed shall remain constant and speed should not increase on distance lesser than this.")]
     public float maxDistance;
+
     [Range(1, 5)]
+    [Tooltip("Minimum distance from the player, from where the speed shall remain constant and speed should not decrease on distance lesser than this.")]
     public float minDistance;
     float distance;
 
