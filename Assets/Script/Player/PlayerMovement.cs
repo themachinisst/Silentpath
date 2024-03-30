@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public float minDistance;
     float distance;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +32,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            StopCoroutine(Move());
+        }
 
+        if (Input.GetMouseButtonUp(0))
+        {
             StartCoroutine(Move());
         }
+
 
     }
 
@@ -60,6 +68,10 @@ public class PlayerMovement : MonoBehaviour
 
         while (elapsedTime < duration)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                yield break;
+            }
             Player.transform.localPosition = Vector3.Lerp(start, end, (elapsedTime / duration));
 
             rotate = MousePos - Player.transform.localPosition;
@@ -70,7 +82,9 @@ public class PlayerMovement : MonoBehaviour
             Player.transform.rotation = Quaternion.Lerp(rotateQ, playerRotateQ, (elapsedTime / duration));
 
             elapsedTime += Time.deltaTime;
+
             yield return Player.transform.localPosition;
+
         }
 
         Player.gameObject.transform.localPosition = end;
